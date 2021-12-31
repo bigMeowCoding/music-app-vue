@@ -1,4 +1,3 @@
-const registerRouter = require('./backend/router')
 
 module.exports = {
   css: {
@@ -10,11 +9,6 @@ module.exports = {
           @import "@/assets/scss/mixin.scss";
         `
       }
-    }
-  },
-  devServer: {
-    before(app) {
-      registerRouter(app)
     }
   },
   configureWebpack: (config) => {
