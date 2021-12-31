@@ -1,8 +1,13 @@
 <template><div>recommend</div></template>
 
-<script lang="ts">
+<script>
+import { getRecommend } from "@/service/recommend";
+
 export default {
   name: "recommend",
+  created() {
+    getRecommend();
+  },
 };
 </script>
 
