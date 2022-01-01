@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend" v-loading="loading">
+  <div class="recommend" v-loading:[loadingText]="loading">
     <Scroll class="recommend-content">
       <div>
         <div class="slider-wrapper">
@@ -44,8 +44,9 @@ export default defineComponent({
     this.albums = res.albums;
   },
 
-  data(): { sliders: any[]; albums: any[] } {
+  data(): { sliders: any[]; loadingText: string; albums: any[] } {
     return {
+      loadingText: "正在加载",
       sliders: [],
       albums: [],
     };
