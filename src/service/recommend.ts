@@ -1,6 +1,7 @@
 import { get } from "./base";
 
 export function getRecommend(): Promise<{
+  albums: any[];
   sliders: any[];
 }> {
   return get("/api/getRecommend");
