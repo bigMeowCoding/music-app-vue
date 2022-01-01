@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" v-loading="loading">
     <Scroll class="recommend-content">
       <div>
         <div class="slider-wrapper">
@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
+          <h1 class="list-title" v-show="!loading">热门歌单推荐</h1>
           <ul>
             <li v-for="item in albums" class="item" :key="item.id">
               <div class="icon">
@@ -43,11 +43,17 @@ export default defineComponent({
     this.sliders = res.sliders;
     this.albums = res.albums;
   },
+
   data(): { sliders: any[]; albums: any[] } {
     return {
       sliders: [],
       albums: [],
     };
+  },
+  computed: {
+    loading(): boolean {
+      return !this.sliders.length && !this.albums.length;
+    },
   },
 });
 </script>
