@@ -42,7 +42,7 @@
 
 <script lang="tsx">
 import useFixed from "./use-fixed.tsx";
-import useShortcut from "./use-shortcut";
+import useShortcut from "./use-shortcut.tsx";
 import Scroll from "@/components/base/scroll/scroll.vue";
 import { defineComponent } from "vue";
 
