@@ -1,8 +1,12 @@
 <template>
-  <div class="singer" v-loading="!singers.length">
+  <div class="singer">
     <IndexList :data="singers" @select="selectSinger" />
   </div>
-  <router-view :singer="selectedSinger" />
+  <router-view v-slot="{ Component }">
+    <transition appear name="slide">
+      <component :is="Component" :singer="selectedSinger" />
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">
@@ -10,6 +14,9 @@ import { defineComponent } from "vue";
 import { getSingerList } from "@/service/singer.ts";
 import IndexList from "@/components/index-list/index-list.vue";
 import { INone } from "../../typings/globals";
+import { SINGER_KEY } from "@/assets/js/constant";
+import storage from "good-storage";
+
 export interface ISingerBase {
   mid: any;
 }
@@ -25,6 +32,7 @@ export default defineComponent({
   methods: {
     selectSinger(singer: ISingerBase) {
       this.selectedSinger = singer;
+      storage.session.set(SINGER_KEY, singer);
       this.$router.push({
         path: `/singer/${singer.mid}`,
       });

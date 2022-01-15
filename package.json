@@ -20,6 +20,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/good-storage": "^1.1.0",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -36,19 +37,20 @@
     "@vue/test-utils": "^2.0.0-0",
     "axios": "^0.24.0",
     "axios-retry": "^3.2.4",
+    "cookie-parser": "^1.4.5",
     "eslint": "^6.7.2",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
+    "good-storage": "^1.1.1",
+    "js-base64": "^3.6.0",
     "node-sass": "^5.0.0",
+    "pinyin": "^2.9.1",
     "prettier": "^2.2.1",
     "sass": "^1.45.2",
     "sass-loader": "^10.1.0",
     "typescript": "~4.1.5",
     "vue-jest": "^5.0.0-0",
-    "pinyin": "^2.9.1",
-    "js-base64": "^3.6.0",
-    "xsrf": "^1.0.0",
-    "cookie-parser": "^1.4.5"
+    "xsrf": "^1.0.0"
   }
 }
