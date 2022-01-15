@@ -1,0 +1,20 @@
+<template>
+  <div>singerdetail</div>
+</template>
+
+<script>
+import { getSingerDetail } from "@/service/singer";
+import { processSongs } from "@/service/song";
+
+export default {
+  name: "singer-detail",
+  props: ["singer"],
+  async created() {
+    const ret = await getSingerDetail(this.singer);
+    const songs = await processSongs(ret.songs);
+    console.log("ret=====", songs);
+  },
+};
+</script>
+
+<style scoped></style>

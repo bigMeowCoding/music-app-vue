@@ -1,14 +1,18 @@
 <template>
   <div class="singer" v-loading="!singers.length">
-    <IndexList :data="singers" />
+    <IndexList :data="singers" @select="selectSinger" />
   </div>
+  <router-view :singer="selectedSinger" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getSingerList } from "@/service/singer.ts";
 import IndexList from "@/components/index-list/index-list.vue";
-
+import { INone } from "../../typings/globals";
+export interface ISingerBase {
+  mid: any;
+}
 export default defineComponent({
   name: "singer",
   components: {
@@ -18,9 +22,18 @@ export default defineComponent({
     const res = await getSingerList();
     this.singers = res.singers;
   },
-  data() {
+  methods: {
+    selectSinger(singer: ISingerBase) {
+      this.selectedSinger = singer;
+      this.$router.push({
+        path: `/singer/${singer.mid}`,
+      });
+    },
+  },
+  data(): { singers: any[]; selectedSinger: ISingerBase | INone } {
     return {
       singers: [],
+      selectedSinger: null,
     };
   },
 });

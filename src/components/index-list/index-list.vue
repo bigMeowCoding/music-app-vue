@@ -41,8 +41,8 @@
 </template>
 
 <script lang="tsx">
-import useFixed from "./use-fixed.tsx";
-import useShortcut from "./use-shortcut.tsx";
+import useFixed from "./use-fixed";
+import useShortcut from "./use-shortcut";
 import Scroll from "@/components/base/scroll/scroll.vue";
 import { defineComponent } from "vue";
 
@@ -68,7 +68,8 @@ export default defineComponent({
       onShortcutTouchMove,
     } = useShortcut(props, groupRef);
 
-    function onItemClick(item) {
+    function onItemClick(item: any) {
+      console.log("item", item);
       emit("select", item);
     }
 

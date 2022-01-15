@@ -4,7 +4,7 @@
       <div>
         <div class="slider-wrapper">
           <div class="slider-content">
-            <slider v-if="sliders.length" :sliders="sliders"></slider>
+            <Slider v-if="sliders.length" :sliders="sliders"></Slider>
           </div>
         </div>
         <div class="recommend-list">
@@ -32,12 +32,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { getRecommend } from "@/service/recommend.ts";
-import Slider from "@/components/base/slider/slider.vue";
+import { getRecommend } from "@/service/recommend";
 import Scroll from "@/components/base/scroll/scroll.vue";
+import Slider from "@/components/base/slider/slider.vue";
 export default defineComponent({
   name: "Recommend",
-  components: { Scroll, Slider },
+  components: { Slider, Scroll },
   async created() {
     const res = await getRecommend();
     this.sliders = res.sliders;
