@@ -30,7 +30,7 @@
 
 <script>
 import SongList from "@/components/base/song-list/song-list";
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import Scroll from "@/components/base/scroll/scroll";
 
 const RESERVED_HEIGHT = 40;
