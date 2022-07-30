@@ -2,16 +2,23 @@
   "name": "music-app",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "serve": "npx webpack serve",
     "build": "webpack"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.17.0",
+    "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "js-base64": "^3.7.2",
     "pinyin": "3.0.0-alpha.5",
+    "postcss": "^8.4.14",
+    "postcss-loader": "^7.0.1",
     "prettier": "^2.7.1",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "vue-loader": "^17.0.0",

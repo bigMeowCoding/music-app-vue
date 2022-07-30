@@ -6,6 +6,22 @@ const registerRouter = require("./backend/router");
 module.exports = {
   mode: "production",
   entry: "./src/main.ts",
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src/"),
+    },
+    extensions: [
+      ".sass",
+      ".scss",
+      ".css",
+      ".wasm",
+      ".vue",
+      ".ts",
+      ".js",
+      ".json",
+    ],
+  },
+
   output: {
     path: path.resolve(__dirname, "./dist"),
   },
@@ -29,6 +45,42 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader",
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: "style-loader",
+            options: {},
+          },
+          {
+            loader: "css-loader",
+            options: {
+              url: false,
+              sourceMap: true,
+              modules: {
+                localIdentName: "[name]__[local]--[hash:base64:5]",
+              },
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              additionalData: `
+          @import "@/styles/variable";
+          @import "@/styles/mixin";
+        `,
+            },
+          },
+        ],
       },
       {
         test: /\.ts$/,
