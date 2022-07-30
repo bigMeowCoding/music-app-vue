@@ -11,19 +11,17 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env", "jest"],
+    "types": ["webpack-env"],
     "paths": {
       "@/*": ["src/*"]
     },
-    "typeRoots": ["./typings", "./common/typings"],
+    "typeRoots": [
+      "./typings",
+      "node_modules/@types",
+      "./node_modules/vuetify/types"
+    ],
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["node_modules"]
 }
