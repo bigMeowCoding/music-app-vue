@@ -5,8 +5,8 @@ html {
     sans-serif, "Droid Sans Fallback";
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  background: $color-background;
-  color: $color-text;
+  background: var(--m-color-background);
+  color: var(--m-color-text);
 }
 
 .g-relative {

@@ -1,20 +1,13 @@
 <template>
   <div>{{ num }}</div>
+  <Header />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import Header from "@/components/header/header.vue";
 export default defineComponent({
-  data() {
-    return {
-      num: 40,
-    };
-  },
-  created() {
-    axios.get("/api/getRecommend").then((d) => {
-      console.log(d);
-    });
-  },
+  components: { Header },
 });
 </script>

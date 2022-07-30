@@ -4,6 +4,7 @@ specifiers:
   '@types/webpack-env': ^1.17.0
   axios: ^0.27.2
   css-loader: ^6.7.1
+  file-loader: ^6.2.0
   html-webpack-plugin: ^5.5.0
   js-base64: ^3.7.2
   pinyin: 3.0.0-alpha.5
@@ -15,6 +16,7 @@ specifiers:
   style-loader: ^3.3.1
   ts-loader: ^9.3.1
   typescript: ^4.7.4
+  url-loader: ^4.1.1
   vue: ^3.2.37
   vue-loader: ^17.0.0
   webpack: ^5.74.0
@@ -28,6 +30,7 @@ dependencies:
 devDependencies:
   '@types/webpack-env': registry.npmmirror.com/@types/webpack-env/1.17.0
   css-loader: registry.npmmirror.com/css-loader/6.7.1_webpack@5.74.0
+  file-loader: registry.npmmirror.com/file-loader/6.2.0_webpack@5.74.0
   html-webpack-plugin: registry.npmmirror.com/html-webpack-plugin/5.5.0_webpack@5.74.0
   js-base64: registry.npmmirror.com/js-base64/3.7.2
   pinyin: registry.npmmirror.com/pinyin/3.0.0-alpha.5
@@ -39,6 +42,7 @@ devDependencies:
   style-loader: registry.npmmirror.com/style-loader/3.3.1_webpack@5.74.0
   ts-loader: registry.npmmirror.com/ts-loader/9.3.1_xnp4kzegbjokq62cajex2ovgkm
   typescript: registry.npmmirror.com/typescript/4.7.4
+  url-loader: registry.npmmirror.com/url-loader/4.1.1_u4acmn7fe6yqgbrqzialkgh5lu
   vue-loader: registry.npmmirror.com/vue-loader/17.0.0_webpack@5.74.0
   webpack: registry.npmmirror.com/webpack/5.74.0_webpack-cli@4.10.0
   webpack-cli: registry.npmmirror.com/webpack-cli/4.10.0_foudhxygz4mdqapuaanowzkgwm
@@ -1904,6 +1908,20 @@ packages:
     engines: {node: '>=0.8.0'}
     dependencies:
       websocket-driver: registry.npmmirror.com/websocket-driver/0.7.4
+    dev: true
+
+  registry.npmmirror.com/file-loader/6.2.0_webpack@5.74.0:
+    resolution: {integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/file-loader/-/file-loader-6.2.0.tgz}
+    id: registry.npmmirror.com/file-loader/6.2.0
+    name: file-loader
+    version: 6.2.0
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: registry.npmmirror.com/loader-utils/2.0.2
+      schema-utils: registry.npmmirror.com/schema-utils/3.1.1
+      webpack: registry.npmmirror.com/webpack/5.74.0_webpack-cli@4.10.0
     dev: true
 
   registry.npmmirror.com/fill-range/7.0.1:
@@ -4031,6 +4049,26 @@ packages:
     version: 4.4.1
     dependencies:
       punycode: registry.npmmirror.com/punycode/2.1.1
+    dev: true
+
+  registry.npmmirror.com/url-loader/4.1.1_u4acmn7fe6yqgbrqzialkgh5lu:
+    resolution: {integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/url-loader/-/url-loader-4.1.1.tgz}
+    id: registry.npmmirror.com/url-loader/4.1.1
+    name: url-loader
+    version: 4.1.1
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      file-loader: '*'
+      webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
+    dependencies:
+      file-loader: registry.npmmirror.com/file-loader/6.2.0_webpack@5.74.0
+      loader-utils: registry.npmmirror.com/loader-utils/2.0.2
+      mime-types: registry.npmmirror.com/mime-types/2.1.35
+      schema-utils: registry.npmmirror.com/schema-utils/3.1.1
+      webpack: registry.npmmirror.com/webpack/5.74.0_webpack-cli@4.10.0
     dev: true
 
   registry.npmmirror.com/util-deprecate/1.0.2:

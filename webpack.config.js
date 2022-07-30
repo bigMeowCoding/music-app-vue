@@ -2,7 +2,7 @@ const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const registerRouter = require("./backend/router");
-
+const staticAssetName = "[path][name].[ext]?[hash:8]";
 module.exports = {
   mode: "production",
   entry: "./src/main.ts",
@@ -23,6 +23,8 @@ module.exports = {
   },
 
   output: {
+    publicPath: "",
+    assetModuleFilename: "images/[hash][ext][query]",
     path: path.resolve(__dirname, "./dist"),
   },
   devServer: {
@@ -56,24 +58,26 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              url: false,
-              sourceMap: true,
-              modules: {
-                localIdentName: "[name]__[local]--[hash:base64:5]",
-              },
               importLoaders: 2,
+              modules: {
+                mode: "local",
+                auto: true,
+                exportGlobals: true,
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                localIdentContext: path.resolve(__dirname, "src"),
+                localIdentHashSalt: "my-custom-hash",
+                namedExport: true,
+                exportLocalsConvention: "camelCase",
+                exportOnlyLocals: false,
+              },
             },
           },
           {
             loader: "postcss-loader",
-            options: {
-              sourceMap: true,
-            },
           },
           {
             loader: "sass-loader",
             options: {
-              sourceMap: true,
               additionalData: `
           @import "@/styles/variable";
           @import "@/styles/mixin";
@@ -91,8 +95,13 @@ module.exports = {
           appendTsSuffixTo: [/\.vue$/],
         },
       },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/,
+        type: "asset/resource"
+      },
     ],
   },
+
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
