@@ -1,11 +1,16 @@
 const path = require("path");
-const webpack = require("webpack");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const registerRouter = require("./backend/router");
-const staticAssetName = "[path][name].[ext]?[hash:8]";
+// const staticAssetName = "[path][name].[ext]?[hash:8]";
 const mode = process.env.NODE_ENV === "dev" ? "development" : "production";
 const publicPath = mode === "development" ? "/" : "";
+const WebpackBar = require("webpackbar");
+const progressPlugin = new WebpackBar({
+  color: "#85d", // 默认green，进度条颜色支持HEX
+  basic: false, // 默认true，启用一个简单的日志报告器
+  profile: false, // 默认false，启用探查器。
+});
 module.exports = {
   mode,
   entry: "./src/main.ts",
@@ -106,6 +111,7 @@ module.exports = {
   },
 
   plugins: [
+    progressPlugin,
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./index.html"),
