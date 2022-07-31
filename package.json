@@ -4,11 +4,14 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "serve": "npx webpack serve",
-    "build": "webpack"
+    "serve": "cross-env NODE_ENV=dev npx webpack serve",
+    "build:dev": "cross-env NODE_ENV=dev webpack",
+    "build:prod": "cross-env NODE_ENV=prod webpack",
+    "deploy": "npm run build &&  node backend/prod.server.js "
   },
   "devDependencies": {
     "@types/webpack-env": "^1.17.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "js-base64": "^3.7.2",
@@ -28,6 +31,10 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "vue": "^3.2.37"
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1",
+    "vue": "^3.2.37",
+    "xsrf": "^1.0.0"
   }
 }
