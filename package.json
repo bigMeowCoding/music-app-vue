@@ -7,7 +7,9 @@
     "serve": "cross-env NODE_ENV=dev npx webpack serve",
     "build:dev": "cross-env NODE_ENV=dev webpack",
     "build:prod": "cross-env NODE_ENV=prod webpack",
-    "deploy": "npm run build &&  node backend/prod.server.js "
+    "serve:prod": "node backend/prod.server.js",
+    "init": "npm install",
+    "deploy": "npm run build &&  node backend/prod.server.js"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.17.0",
