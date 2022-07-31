@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const registerRouter = require("./backend/router");
 const staticAssetName = "[path][name].[ext]?[hash:8]";
 const mode = process.env.NODE_ENV === "dev" ? "development" : "production";
-const publicPath = mode === "development" ? "/" : "music-app";
+const publicPath = mode === "development" ? "/" : "";
 module.exports = {
   mode,
   entry: "./src/main.ts",
