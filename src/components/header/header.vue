@@ -18,6 +18,7 @@ export default {
   height: 44px;
   justify-content: center;
   align-items: center;
+  color: var(--m-color-theme);
   .icon {
     display: inline-block;
     width: 30px;
