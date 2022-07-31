@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "serve": "cross-env NODE_ENV=dev npx webpack serve",
-    "build:dev": "cross-env NODE_ENV=dev webpack",
-    "build:prod": "cross-env NODE_ENV=prod webpack",
-    "serve:prod": "cross-env NODE_ENV=prod node backend/prod.server.js",
+    "build:dev": "cross-env NODE_ENV=development webpack",
+    "build:prod": "cross-env NODE_ENV=prodution webpack",
+    "serve:prod": "cross-env NODE_ENV=production node backend/prod.server.js",
     "init": "npm install",
     "deploy": "npm run build &&  node backend/prod.server.js"
   },
