@@ -6,16 +6,16 @@
 </template>
 
 <script>
-import {get} from "@/assets/service/base";
+import { get } from "@/service/base";
 
 export default {
   name: "Header",
   data() {},
   created() {
-    get('/api/getRecommend').then((d)=> {
-      console.log(d)
-    })
-  }
+    get("/api/getRecommend").then((d) => {
+      console.log(d);
+    });
+  },
 };
 </script>
 
