@@ -1,13 +1,13 @@
 <template>
-  <div>{{ num }}</div>
   <Header />
+  <tab />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
 import Header from "@/components/header/header.vue";
+import Tab from "@/components/tab/tab.vue";
 export default defineComponent({
-  components: { Header },
+  components: { Tab, Header },
 });
 </script>

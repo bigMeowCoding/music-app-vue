@@ -42,6 +42,6 @@
   --m-font-size-large-x: 22px;
   // 间距
   $spaceBase: 8px;
-  --m-space-1: $spaceBase;
-  --m-space-2: $spaceBase * 2;
+  --m-space-1: #{$spaceBase};
+  --m-space-2: #{$spaceBase * 2};
 }
