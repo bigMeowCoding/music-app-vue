@@ -1,33 +1,36 @@
 <template>
   <div class="recommend">
-    <div class="recommend-content">
-      <div class="slider-wrapper">
-        <slider v-if="sliders.length" :sliders="sliders" />
+    <scroll class="recommend-content">
+      <div>
+        <div class="slider-wrapper">
+          <slider v-if="sliders.length" :sliders="sliders" />
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li class="item" v-for="item in albums" :key="item.id">
+              <div class="icon">
+                <img :src="item.pic" width="60" height="60" alt="icon" />
+              </div>
+              <div class="text">
+                <h2 class="name">{{ item.username }}</h2>
+                <p class="text">{{ item.title }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌单推荐</h1>
-        <ul>
-          <li class="item" v-for="item in albums" :key="item.id">
-            <div class="icon">
-              <img :src="item.pic" width="60" height="60" alt="icon" />
-            </div>
-            <div class="text">
-              <h2 class="name">{{ item.username }}</h2>
-              <p class="text">{{ item.title }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </scroll>
   </div>
 </template>
 
 <script>
 import Slider from "@/components/base/slider/slider";
 import { getRecommend } from "@/service/recommend";
+import Scroll from "@/components/base/scroll/scroll";
 export default {
   name: "recommend",
-  components: { Slider },
+  components: { Scroll, Slider },
   data() {
     return { sliders: [], albums: [] };
   },
@@ -45,9 +48,11 @@ export default {
   position: fixed;
   width: 100%;
   top: 88px;
+  overflow: scroll;
   bottom: 0;
   .recommend-content {
     height: 100%;
+    overflow: hidden;
     .slider-wrapper {
       width: 100%;
       position: relative;
