@@ -10,7 +10,7 @@
           <ul>
             <li class="item" v-for="item in albums" :key="item.id">
               <div class="icon">
-                <img :src="item.pic" width="60" height="60" alt="icon" />
+                <van-image :src="item.pic" width="60" height="60" alt="icon" />
               </div>
               <div class="text">
                 <h2 class="name">{{ item.username }}</h2>
@@ -28,11 +28,12 @@
 import Slider from "@/components/base/slider/slider";
 import { getRecommend } from "@/service/recommend";
 import Scroll from "@/components/base/scroll/scroll";
+import { Button } from "vant";
 export default {
   name: "recommend",
   components: { Scroll, Slider },
   data() {
-    return { sliders: [], albums: [] };
+    return { sliders: [], albums: [], [Button.name]: Button };
   },
   async created() {
     const res = await getRecommend();

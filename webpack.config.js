@@ -2,6 +2,9 @@ const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const registerRouter = require("./backend/router");
+const ComponentsPlugin = require("unplugin-vue-components/webpack");
+const { VantResolver } = require("unplugin-vue-components/resolvers");
+
 // const staticAssetName = "[path][name].[ext]?[hash:8]";
 const mode = process.env.NODE_ENV === "dev" ? "development" : "production";
 const publicPath = mode === "development" ? "/" : "";
@@ -22,6 +25,7 @@ module.exports = {
       ".sass",
       ".scss",
       ".css",
+      ".mjs",
       ".wasm",
       ".vue",
       ".ts",
@@ -57,7 +61,7 @@ module.exports = {
         loader: "vue-loader",
       },
       {
-        test: /\.scss$/,
+        test: /\.(css|less|scss)$/,
         use: [
           {
             loader: "style-loader",
@@ -111,6 +115,9 @@ module.exports = {
 
   plugins: [
     progressPlugin,
+    ComponentsPlugin({
+      resolvers: [VantResolver()],
+    }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./index.html"),
