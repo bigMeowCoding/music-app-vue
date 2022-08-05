@@ -16,7 +16,7 @@ const progressPlugin = new WebpackBar({
 });
 module.exports = {
   mode,
-  entry: "./src/main.ts",
+  entry: "./src/main.js",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src/"),
