@@ -1,18 +1,19 @@
 <template>
-  <div class="recommend">
-    <scroll class="recommend-content">
+  <div class="recommend" v-loading="loading">
+    <scroll class="recommend-content" >
       <div>
         <div class="slider-wrapper">
-          <slider v-if="sliders.length" :sliders="sliders" />
+          <div class="slider-content">
+            <slider v-if="sliders.length" :sliders="sliders" />
+          </div>
         </div>
         <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
-
+          <h1 class="list-title" v-show="!loading">热门歌单推荐</h1>
           <ul>
             <li class="item" v-for="item in albums" :key="item.id">
               <div class="icon">
                 <van-image
-                  lazy-load="true"
+                  lazy-load
                   :src="item.pic"
                   width="60"
                   height="60"
@@ -40,6 +41,11 @@ import { Button } from "vant";
 export default {
   name: "recommend",
   components: { Scroll, Slider },
+  computed: {
+    loading() {
+      return !this.sliders.length && !this.albums.length;
+    },
+  },
   data() {
     return {
       sliders: [],
@@ -69,6 +75,16 @@ export default {
     .slider-wrapper {
       width: 100%;
       position: relative;
+      height: 0;
+      padding-top: 40%;
+      overflow: hidden;
+      .slider-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .recommend-list {

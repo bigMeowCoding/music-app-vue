@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@better-scroll/core': ^2.4.2
   '@better-scroll/observe-dom': ^2.4.2
+  '@better-scroll/observe-image': ^2.4.2
   '@better-scroll/slide': ^2.4.2
   '@types/webpack-env': ^1.17.0
   axios: ^0.27.2
@@ -36,6 +37,7 @@ specifiers:
 dependencies:
   '@better-scroll/core': registry.npmmirror.com/@better-scroll/core/2.4.2
   '@better-scroll/observe-dom': registry.npmmirror.com/@better-scroll/observe-dom/2.4.2
+  '@better-scroll/observe-image': registry.npmmirror.com/@better-scroll/observe-image/2.4.2
   '@better-scroll/slide': registry.npmmirror.com/@better-scroll/slide/2.4.2
   axios: registry.npmmirror.com/axios/0.27.2
   compression: registry.npmmirror.com/compression/1.7.4
@@ -141,6 +143,14 @@ packages:
   registry.npmmirror.com/@better-scroll/observe-dom/2.4.2:
     resolution: {integrity: sha512-eeS77CZs+V72dkya10e5ptndBAbhQVcXoYGvfoIihOJgCPqO5MdYTpzRmlbshYCEE5juUMLe82Kx8FSbOejpAw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@better-scroll/observe-dom/-/observe-dom-2.4.2.tgz}
     name: '@better-scroll/observe-dom'
+    version: 2.4.2
+    dependencies:
+      '@better-scroll/core': registry.npmmirror.com/@better-scroll/core/2.4.2
+    dev: false
+
+  registry.npmmirror.com/@better-scroll/observe-image/2.4.2:
+    resolution: {integrity: sha512-ToYVf5vn0cio5B9uaL5NyvFX3JNU6L0Po20Lw7uxa0+FE+kMvSAMJN+9POg6G+cfIqI8GVHhyyR+4Ev8v2Nl5Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@better-scroll/observe-image/-/observe-image-2.4.2.tgz}
+    name: '@better-scroll/observe-image'
     version: 2.4.2
     dependencies:
       '@better-scroll/core': registry.npmmirror.com/@better-scroll/core/2.4.2
