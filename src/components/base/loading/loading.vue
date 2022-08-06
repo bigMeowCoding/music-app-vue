@@ -3,7 +3,7 @@
     <div class="loading-content">
       <van-loading type="spinner" />
       <p class="loading-desc">
-        {{ data }}
+        {{ title }}
       </p>
     </div>
   </div>
@@ -18,7 +18,12 @@ export default {
     [Loading.name]: Loading,
   },
   data() {
-    return { data: "正在加载" };
+    return { title: "正在加载" };
+  },
+  methods: {
+    setTitle(title) {
+      this.title = title;
+    },
   },
 };
 </script>

@@ -50,6 +50,7 @@ export default {
     return {
       sliders: [],
       albums: [],
+      loadingText:'加载哈。。。。。',
       [Button.name]: Button,
     };
   },

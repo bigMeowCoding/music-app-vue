@@ -4,6 +4,7 @@ import { addClass, removeClass } from "@/assets/js/dom";
 const relativeCls = "g-relative";
 function append(el) {
   const style = getComputedStyle(el);
+
   if (["absolute", "fixed", "relative"].indexOf(style.position) === -1) {
     addClass(el, relativeCls);
   }
@@ -18,6 +19,10 @@ export const loadingDirective = {
     const div = document.createElement("div");
     el.instance = createApp(loading).mount(div);
     const val = binding.value;
+    const arg = binding.arg;
+    if (typeof arg !== "undefined") {
+      el.instance.setTitle(arg);
+    }
     if (val) {
       append(el);
     }
@@ -25,6 +30,10 @@ export const loadingDirective = {
   updated(el, binding) {
     const val = binding.value,
       oldValue = binding.oldValue;
+    if (typeof binding.arg !== "undefined") {
+      el.instance.setTitle(binding.arg);
+    }
+
     if (oldValue !== val) {
       if (val) {
         append(el);
