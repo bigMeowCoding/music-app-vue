@@ -9,7 +9,7 @@
     "build:prod": "cross-env NODE_ENV=prodution webpack",
     "serve:prod": "cross-env NODE_ENV=production node backend/prod.server.js",
     "init": "npm install",
-    "deploy": "npm run build &&  node backend/prod.server.js"
+    "deploy": "pm2 start 'npm run serve:prod' --name serve"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.17.0",
