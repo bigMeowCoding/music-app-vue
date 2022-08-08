@@ -23,6 +23,9 @@ export function useShortCut(prop, groupRef) {
   }
 
   function scrollToElement(index) {
+    if (isNaN(index)) {
+      return;
+    }
     index = Math.max(0, Math.min(index, shortCutList.value.length - 1));
     const groupList = groupRef.value;
     const el = groupList.children[index];
