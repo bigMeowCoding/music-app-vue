@@ -61,5 +61,6 @@ export function useFixed(props) {
     fixedTitle,
     groupRef,
     fixedStyle,
+    currentIndexRef,
   };
 }

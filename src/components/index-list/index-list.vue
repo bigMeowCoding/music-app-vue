@@ -16,12 +16,24 @@
         {{ fixedTitle }}
       </div>
     </div>
+    <div class="shortcut">
+      <ul>
+        <li
+          class="item"
+          v-for="(item, index) in shortCutList"
+          :class="{ current: index === currentIndexRef }"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </scroll>
 </template>
 
 <script>
 import Scroll from "@/components/base/scroll/scroll";
 import { useFixed } from "@/components/index-list/useFixed";
+import { useShortCut } from "@/components/index-list/useShortCut";
 export default {
   name: "index-list",
   components: { Scroll },
@@ -34,8 +46,17 @@ export default {
     },
   },
   setup(props) {
-    const { onScroll, groupRef, fixedTitle, fixedStyle } = useFixed(props);
-    return { onScroll, groupRef, fixedTitle, fixedStyle };
+    const { onScroll, groupRef, fixedTitle, currentIndexRef, fixedStyle } =
+      useFixed(props);
+    const { shortCutList } = useShortCut(props);
+    return {
+      onScroll,
+      currentIndexRef,
+      shortCutList,
+      groupRef,
+      fixedTitle,
+      fixedStyle,
+    };
   },
 };
 </script>
@@ -78,6 +99,26 @@ export default {
     font-size: var(--m-font-size-small);
     color: var(--m-color-text-l);
     background-color: var(--m-color-highlight-background);
+  }
+  .shortcut {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--m-color-background-d);
+    width: 20px;
+    font-family: Helvetica;
+    text-align: center;
+    padding: 20px 0;
+    border-radius: 10px;
+    .item {
+      color: var(--m-color-text-l);
+      font-size: var(--m-font-size-small);
+      padding: 3px;
+      &.current {
+        color: var(--m-color-theme);
+      }
+    }
   }
 }
 </style>
