@@ -12,9 +12,9 @@ export function useScroll(rootRef, option, emit) {
     console.log({
       observeDOM: true,
       observeImage: true, // 开启 observe-image 插件
-      momentum:true,
+      momentum: true,
       ...option,
-    })
+    });
     const bs = (bsRef.value = new BScroll(rootRef.value, {
       observeDOM: true,
       observeImage: true, // 开启 observe-image 插件
@@ -29,5 +29,7 @@ export function useScroll(rootRef, option, emit) {
   onUnmounted(() => {
     bsRef.value.destroy();
   });
-  return bsRef;
+  return {
+    scroll: bsRef,
+  };
 }
