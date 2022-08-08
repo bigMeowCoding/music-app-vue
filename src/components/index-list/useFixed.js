@@ -1,16 +1,26 @@
 import { computed, nextTick, ref, watch } from "vue";
 
 export function useFixed(props) {
+  const TITLE_HEIGHT = 30;
   const scrollRef = ref();
   const groupRef = ref();
   const groupHeightRef = ref([]);
   const currentIndexRef = ref(0);
+  const distanceRef = ref(0);
   const fixedTitle = computed(() => {
     if (scrollRef.value < 0) {
       return "";
     }
     const currentGroup = props.data[currentIndexRef.value];
     return currentGroup?.title ?? "";
+  });
+  const fixedStyle = computed(() => {
+    const distanceValue = distanceRef.value;
+    const diff =
+      distanceValue > 0 && distanceValue < TITLE_HEIGHT
+        ? distanceValue - TITLE_HEIGHT
+        : 0;
+    return `transform:translateY(${diff}px)`;
   });
   watch(
     () => props.data,
@@ -26,6 +36,7 @@ export function useFixed(props) {
       const bottom = groupHeight[i + 1];
       if (newY >= top && newY <= bottom) {
         currentIndexRef.value = i;
+        distanceRef.value = bottom - newY;
       }
     }
   });
@@ -49,5 +60,6 @@ export function useFixed(props) {
     onScroll,
     fixedTitle,
     groupRef,
+    fixedStyle,
   };
 }
