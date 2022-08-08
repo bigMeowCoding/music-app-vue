@@ -16,7 +16,11 @@
         {{ fixedTitle }}
       </div>
     </div>
-    <div class="shortcut" @touchstart="onShortCutTouchStart">
+    <div
+      class="shortcut"
+      @touchstart.stop.prevent="onShortCutTouchStart"
+      @touchmove.stop.prevent="onShortCutTouchMove"
+    >
       <ul>
         <li
           class="item"
@@ -49,10 +53,12 @@ export default {
   setup(props) {
     const { onScroll, groupRef, fixedTitle, currentIndexRef, fixedStyle } =
       useFixed(props);
-    const { shortCutList, scrollRef, onShortCutTouchStart } = useShortCut(
-      props,
-      groupRef
-    );
+    const {
+      shortCutList,
+      scrollRef,
+      onShortCutTouchStart,
+      onShortCutTouchMove,
+    } = useShortCut(props, groupRef);
     return {
       onScroll,
       scrollRef,
@@ -60,6 +66,7 @@ export default {
       shortCutList,
       groupRef,
       onShortCutTouchStart,
+      onShortCutTouchMove,
       fixedTitle,
       fixedStyle,
     };
