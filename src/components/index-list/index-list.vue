@@ -82,6 +82,7 @@ export default {
   overflow: hidden;
   background-color: var(--m-color-background);
   .group {
+    padding-bottom: 30px;
     .item {
       display: flex;
       align-items: center;
