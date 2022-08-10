@@ -2,13 +2,24 @@ import recommend from "@/views/recommend.vue";
 import singer from "@/views/singer.vue";
 import topList from "@/views/top-list.vue";
 import search from "@/views/search.vue";
+import SingerDetail from "@/views/singer-detail.vue";
+
 import * as VueRouter from "vue-router";
 const routes = [
   // dynamic segments start with a colon
   { path: "/", redirect: "/recommend" },
 
   { path: "/recommend", component: recommend },
-  { path: "/singer", component: singer },
+  {
+    path: "/singer",
+    component: singer,
+    children: [
+      {
+        path: ":id",
+        component: SingerDetail,
+      },
+    ],
+  },
   { path: "/top-list", component: topList },
   { path: "/search", component: search },
 ];

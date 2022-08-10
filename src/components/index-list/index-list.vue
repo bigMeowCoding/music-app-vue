@@ -4,7 +4,11 @@
       <li class="group" v-for="group in data" :key="group.title">
         <h2 class="title">{{ group.title }}</h2>
         <ul>
-          <li class="item" v-for="item in group.list">
+          <li
+            class="item"
+            v-for="item in group.list"
+            @click="onItemClick(item)"
+          >
             <img class="avatar" :src="item.pic" alt="" />
             <span class="name">{{ item.name }}</span>
           </li>
@@ -50,7 +54,8 @@ export default {
       },
     },
   },
-  setup(props) {
+  emits: ["select"],
+  setup(props, { emit }) {
     const { onScroll, groupRef, fixedTitle, currentIndexRef, fixedStyle } =
       useFixed(props);
     const {
@@ -59,9 +64,13 @@ export default {
       onShortCutTouchStart,
       onShortCutTouchMove,
     } = useShortCut(props, groupRef);
+    function onItemClick(item) {
+      emit("select", item);
+    }
     return {
       onScroll,
       scrollRef,
+      onItemClick,
       currentIndexRef,
       shortCutList,
       groupRef,
