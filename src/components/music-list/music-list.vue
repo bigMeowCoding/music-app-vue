@@ -1,11 +1,11 @@
 <template>
   <div class="music-list">
     <div class="back" @click="back">
-      <i class="icon-back"></i>
+      <i class="icon-back" />
     </div>
     <h1 class="title">{{ title }}</h1>
     <div class="bg-image" ref="bgImageRef" :style="bgImageStyle">
-      <div class="play-btn-wrapper">
+      <div class="play-btn-wrapper" :style="playBtnStyle">
         <div class="play-btn">
           <i class="icon-play"></i>
           <span>随机播放全部</span>
@@ -13,7 +13,13 @@
       </div>
       <div class="filter"></div>
     </div>
-    <scroll class="list" :style="scrollStyle" v-loading="loading">
+    <scroll
+      class="list"
+      :style="scrollStyle"
+      @scroll="onScroll"
+      :probe-type="3"
+      v-loading="loading"
+    >
       <div class="song-list-wrapper">
         <song-list :songs="songs" />
       </div>
@@ -24,17 +30,47 @@
 <script>
 import SongList from "@/components/base/song-list/song-list";
 import Scroll from "@/components/base/scroll/scroll";
+const navHeight = 40;
 export default {
   name: "music-list",
   components: { Scroll, SongList },
   data() {
     return {
       bgImageHeight: 0,
+      scrollY: 0,
+      maxTransformY: 0,
     };
   },
   computed: {
-    bgImageStyle() {
+    playBtnStyle() {
+      let display = "block";
+      if (this.scrollY > this.maxTransformY) {
+        display = "none";
+      }
       return {
+        display,
+      };
+    },
+    bgImageStyle() {
+      let paddingTop = "70%";
+      let zIndex = 0,
+        height = 0,
+        translateZ = 0,
+        scale = 1;
+      if (this.scrollY > this.maxTransformY) {
+        zIndex = 10;
+        paddingTop = 0;
+        translateZ = 1;
+        height = navHeight + "px";
+      }
+      if (this.scrollY < 0) {
+        scale = 1 + Math.abs(this.scrollY / this.bgImageHeight);
+      }
+      return {
+        transform: `scale(${scale})translateZ(${translateZ}px)`,
+        paddingTop,
+        height,
+        zIndex,
         backgroundImage: `url(${this.pic})`,
       };
     },
@@ -46,6 +82,7 @@ export default {
   },
   mounted() {
     this.bgImageHeight = this.$refs.bgImageRef.clientHeight;
+    this.maxTransformY = this.bgImageHeight - navHeight;
   },
   props: {
     loading: Boolean,
@@ -61,6 +98,9 @@ export default {
   methods: {
     back() {
       this.$router.back();
+    },
+    onScroll(pos) {
+      this.scrollY = -pos.y;
     },
   },
 };
@@ -98,7 +138,6 @@ export default {
   }
   .bg-image {
     position: relative;
-    padding-top: 70%;
     background-size: cover;
     .play-btn-wrapper {
       position: absolute;
@@ -138,7 +177,6 @@ export default {
     position: absolute;
     bottom: 0;
     width: 100%;
-    overflow: hidden;
     .song-list-wrapper {
       padding: 20px 30px;
       background: var(--m-color-background);
