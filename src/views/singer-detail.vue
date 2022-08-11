@@ -1,6 +1,6 @@
 <template>
   <div class="singer-detail">
-    <music-list :title="title" :pic="pic" :songs="songs" />
+    <music-list :loading="loading" :title="title" :pic="pic" :songs="songs" />
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       songs: [],
+      loading:true,
     };
   },
   computed: {
@@ -31,6 +32,7 @@ export default {
   async created() {
     let ret = await getSingerDetail(this.singer);
     this.songs = await processSongs(ret.songs);
+    this.loading = false;
   },
 };
 </script>

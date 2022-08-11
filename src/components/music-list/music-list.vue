@@ -1,10 +1,10 @@
 <template>
   <div class="music-list">
-    <div class="back">
+    <div class="back" @click="back">
       <i class="icon-back"></i>
     </div>
     <h1 class="title">{{ title }}</h1>
-    <div class="bg-image" :style="bgImageStyle">
+    <div class="bg-image" ref="bgImageRef" :style="bgImageStyle">
       <div class="play-btn-wrapper">
         <div class="play-btn">
           <i class="icon-play"></i>
@@ -13,7 +13,7 @@
       </div>
       <div class="filter"></div>
     </div>
-    <scroll class="list">
+    <scroll class="list" :style="scrollStyle" v-loading="loading">
       <div class="song-list-wrapper">
         <song-list :songs="songs" />
       </div>
@@ -27,14 +27,28 @@ import Scroll from "@/components/base/scroll/scroll";
 export default {
   name: "music-list",
   components: { Scroll, SongList },
+  data() {
+    return {
+      bgImageHeight: 0,
+    };
+  },
   computed: {
     bgImageStyle() {
       return {
         backgroundImage: `url(${this.pic})`,
       };
     },
+    scrollStyle() {
+      return {
+        top: this.bgImageHeight + "px",
+      };
+    },
+  },
+  mounted() {
+    this.bgImageHeight = this.$refs.bgImageRef.clientHeight;
   },
   props: {
+    loading: Boolean,
     songs: {
       type: Array,
       default() {
@@ -43,6 +57,11 @@ export default {
     },
     title: String,
     pic: String,
+  },
+  methods: {
+    back() {
+      this.$router.back();
+    },
   },
 };
 </script>
@@ -79,7 +98,7 @@ export default {
   }
   .bg-image {
     position: relative;
-    height: 300px; // TODO
+    padding-top: 70%;
     background-size: cover;
     .play-btn-wrapper {
       position: absolute;
@@ -115,10 +134,11 @@ export default {
     }
   }
   .list {
-    top: 300px;
     z-index: 0;
     position: absolute;
-    bottom: 60px;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
     .song-list-wrapper {
       padding: 20px 30px;
       background: var(--m-color-background);
