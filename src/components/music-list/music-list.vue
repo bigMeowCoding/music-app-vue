@@ -22,7 +22,7 @@
       v-no-result="noResult"
     >
       <div class="song-list-wrapper">
-        <song-list :songs="songs" />
+        <song-list :songs="songs" @selectSong="selectSong" />
       </div>
     </scroll>
   </div>
@@ -31,6 +31,7 @@
 <script>
 import SongList from "@/components/base/song-list/song-list";
 import Scroll from "@/components/base/scroll/scroll";
+import { mapActions } from "vuex";
 const navHeight = 40;
 export default {
   name: "music-list",
@@ -120,6 +121,10 @@ export default {
     onScroll(pos) {
       this.scrollY = -pos.y;
     },
+    selectSong({ song, index }) {
+      this.selectPlay({ list: this.songs, index });
+    },
+    ...mapActions(["selectPlay"]),
   },
 };
 </script>

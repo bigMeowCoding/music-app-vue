@@ -6,8 +6,10 @@ import defaultImage from "@/assets/images/default.png";
 import { Lazyload } from "vant";
 import { loadingDirective } from "@/components/base/loading/loading-directive";
 import { noResultDirective } from "@/components/base/no-result/noResult-directive";
+import store from "@/store";
 createApp(App)
   .use(router)
+  .use(store)
   .use(Lazyload, {
     loading: defaultImage,
   })
