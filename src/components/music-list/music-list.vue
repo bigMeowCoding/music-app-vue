@@ -5,7 +5,12 @@
     </div>
     <h1 class="title">{{ title }}</h1>
     <div class="bg-image" ref="bgImageRef" :style="bgImageStyle">
-      <div class="play-btn-wrapper" :style="playBtnStyle">
+      <div
+        class="play-btn-wrapper"
+        @click="playUseRandomMode"
+        :style="playBtnStyle"
+        v-show="songs.length"
+      >
         <div class="play-btn">
           <i class="icon-play"></i>
           <span>随机播放全部</span>
@@ -121,10 +126,13 @@ export default {
     onScroll(pos) {
       this.scrollY = -pos.y;
     },
-    selectSong({ song, index }) {
+    selectSong({ index }) {
       this.selectPlay({ list: this.songs, index });
     },
-    ...mapActions(["selectPlay"]),
+    playUseRandomMode() {
+      this.randomPlay({ list: this.songs });
+    },
+    ...mapActions(["selectPlay", "randomPlay"]),
   },
 };
 </script>
