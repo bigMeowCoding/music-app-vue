@@ -19,6 +19,7 @@
       @scroll="onScroll"
       :probe-type="3"
       v-loading="loading"
+      v-no-result="noResult"
     >
       <div class="song-list-wrapper">
         <song-list :songs="songs" />
@@ -42,6 +43,9 @@ export default {
     };
   },
   computed: {
+    noResult() {
+      return !this.loading && !this.songs.length;
+    },
     filterStyle() {
       let blur = 0;
       if (this.scrollY > 0) {
