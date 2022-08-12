@@ -8,6 +8,8 @@
 import { getSingerDetail } from "@/service/singers";
 import { processSongs } from "@/service/songs";
 import MusicList from "@/components/music-list/music-list";
+import storage from "good-storage";
+import { SINGER } from "@/assets/js/constant";
 
 export default {
   name: "singer-detail",
@@ -18,19 +20,34 @@ export default {
   data() {
     return {
       songs: [],
-      loading:true,
+      loading: true,
     };
   },
   computed: {
+    compuedSinger() {
+      if (this.singer) {
+        return this.singer;
+      } else {
+        const cache = storage.session.get(SINGER);
+        if (cache && cache.mid === this.$route.params.id) {
+          return cache;
+        }
+      }
+    },
     title() {
-      return this.singer?.name;
+      return this.compuedSinger?.name;
     },
     pic() {
-      return this.singer?.pic;
+      return this.compuedSinger?.pic;
     },
   },
   async created() {
-    let ret = await getSingerDetail(this.singer);
+    if (!this.compuedSinger) {
+      const path = this.$route.matched[0].path;
+      this.$router.push({ path });
+      return;
+    }
+    let ret = await getSingerDetail(this.compuedSinger);
     this.songs = await processSongs(ret.songs);
     this.loading = false;
   },

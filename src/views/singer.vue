@@ -8,7 +8,8 @@
 <script>
 import { getSingerList } from "@/service/singers";
 import IndexList from "@/components/index-list/index-list";
-
+import storage from "good-storage";
+import { SINGER } from "@/assets/js/constant";
 export default {
   name: "singer",
   components: { IndexList },
@@ -22,6 +23,7 @@ export default {
   methods: {
     selectSinger(singer) {
       this.selectedSinger = singer;
+      storage.session.set(SINGER, singer);
       this.$router.push({
         path: `/singer/${singer.mid}`,
       });
