@@ -10,9 +10,25 @@
         <div class="sub-title">{{ currentSong.singer }}</div>
       </div>
       <div class="middle"></div>
-      <div class="bottom"></div>
+      <div class="bottom">
+        <div class="operator">
+          <div class="icon icon-left">
+            <i></i>
+          </div>
+          <div class="icon icon-left">
+            <i class="icon-prev"></i>
+          </div>
+          <div class="icon icon-center">
+            <i :class="playIcon" @click="togglePlay"></i>
+          </div>
+          <div class="icon icon-right">
+            <i class="icon-next"></i>
+          </div>
+          <div class="icon icon-right"></div>
+        </div>
+      </div>
     </div>
-    <audio ref="audioRef"></audio>
+    <audio ref="audioRef" @pause="onPause"></audio>
   </div>
 </template>
 
@@ -28,11 +44,17 @@ export default {
     const currentSong = computed(() => {
       return store.getters.currentSong;
     });
+    const playing = computed(() => {
+      return store.state.playing;
+    });
     const playlist = computed(() => {
       return store.state.playlist;
     });
     const fullScreen = computed(() => {
       return store.state.fullScreen;
+    });
+    const playIcon = computed(() => {
+      return playing.value ? "icon-pause" : "icon-play";
     });
     watch(currentSong, (newSong) => {
       if (!newSong.mid || !newSong.url) {
@@ -42,10 +64,33 @@ export default {
       audio.src = newSong.url;
       audio.play();
     });
+    watch(playing, (p) => {
+      const audio = audioRef.value;
+      if (p) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
     function back() {
       store.commit("setFullScreen", false);
     }
-    return { back, audioRef, fullScreen, currentSong, playlist };
+    function onPause() {
+      store.commit("setPlayingState", false);
+    }
+    function togglePlay() {
+      store.commit("setPlayingState", !playing.value);
+    }
+    return {
+      back,
+      onPause,
+      audioRef,
+      playIcon,
+      fullScreen,
+      currentSong,
+      playlist,
+      togglePlay,
+    };
   },
 };
 </script>
@@ -104,6 +149,33 @@ export default {
         line-height: 24px;
         text-align: center;
         font-size: var(--m-font-size-medium);
+      }
+    }
+    .bottom {
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      .operator {
+        display: flex;
+        align-items: center;
+        .icon {
+          flex: 1;
+          min-width: 0;
+          color: var(--m-color-theme);
+          i {
+            font-size: 30px;
+          }
+        }
+        .icon-left {
+          text-align: right;
+        }
+        .icon-center {
+          padding: 0 20px;
+          text-align: center;
+        }
+        .icon-right {
+          text-align: left;
+        }
       }
     }
   }
