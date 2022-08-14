@@ -15,20 +15,25 @@
           <div class="icon icon-left">
             <i></i>
           </div>
-          <div class="icon icon-left">
+          <div class="icon icon-left" :class="disableIcon">
             <i class="icon-prev" @click="prev"></i>
           </div>
-          <div class="icon icon-center">
+          <div class="icon icon-center" :class="disableIcon">
             <i :class="playIcon" @click="togglePlay"></i>
           </div>
-          <div class="icon icon-right">
+          <div class="icon icon-right" :class="disableIcon">
             <i class="icon-next" @click="next"></i>
           </div>
           <div class="icon icon-right"></div>
         </div>
       </div>
     </div>
-    <audio ref="audioRef" @pause="onPause"></audio>
+    <audio
+      ref="audioRef"
+      @error="onError"
+      @canplay="onCanPlay"
+      @pause="onPause"
+    ></audio>
   </div>
 </template>
 
@@ -41,6 +46,7 @@ export default {
   setup() {
     const store = useStore();
     const audioRef = ref();
+    const songReady = ref();
     const currentSong = computed(() => {
       return store.getters.currentSong;
     });
@@ -59,15 +65,22 @@ export default {
     const playIcon = computed(() => {
       return playing.value ? "icon-pause" : "icon-play";
     });
+    const disableIcon = computed(() => {
+      return songReady.value ? null : "disable";
+    });
     watch(currentSong, (newSong) => {
       if (!newSong.mid || !newSong.url) {
         return;
       }
+      songReady.value = false;
       const audio = audioRef.value;
       audio.src = newSong.url;
       audio.play();
     });
     watch(playing, (p) => {
+      if (!songReady.value) {
+        return;
+      }
       const audio = audioRef.value;
       if (p) {
         audio.play();
@@ -82,12 +95,14 @@ export default {
       store.commit("setPlayingState", false);
     }
     function togglePlay() {
+      if (!songReady.value) {
+        return;
+      }
       store.commit("setPlayingState", !playing.value);
     }
 
     function next() {
-
-      if (!playlist.value.length) {
+      if (!songReady.value || !playlist.value.length) {
         return;
       }
       if (playlist.value.length === 1) {
@@ -107,7 +122,7 @@ export default {
     }
 
     function prev() {
-      if (!playlist.value.length) {
+      if (!songReady.value || !playlist.value.length) {
         return;
       }
       if (playlist.value.length === 1) {
@@ -130,7 +145,18 @@ export default {
       audio.play();
       store.commit("setPlayingState", true);
     }
+    function onCanPlay() {
+      if (songReady.value) {
+        return;
+      }
+      songReady.value = true;
+    }
+    function onError() {
+      songReady.value = true;
+    }
     return {
+      onError,
+      onCanPlay,
       back,
       onPause,
       audioRef,
@@ -141,6 +167,7 @@ export default {
       togglePlay,
       next,
       prev,
+      disableIcon,
     };
   },
 };
@@ -213,6 +240,9 @@ export default {
           flex: 1;
           min-width: 0;
           color: var(--m-color-theme);
+          &.disable {
+            color: var(--m-color-theme-d);
+          }
           i {
             font-size: 30px;
           }
