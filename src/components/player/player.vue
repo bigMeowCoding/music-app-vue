@@ -16,13 +16,13 @@
             <i></i>
           </div>
           <div class="icon icon-left">
-            <i class="icon-prev"></i>
+            <i class="icon-prev" @click="prev"></i>
           </div>
           <div class="icon icon-center">
             <i :class="playIcon" @click="togglePlay"></i>
           </div>
           <div class="icon icon-right">
-            <i class="icon-next"></i>
+            <i class="icon-next" @click="next"></i>
           </div>
           <div class="icon icon-right"></div>
         </div>
@@ -43,6 +43,9 @@ export default {
     const audioRef = ref();
     const currentSong = computed(() => {
       return store.getters.currentSong;
+    });
+    const currentIndex = computed(() => {
+      return store.state.currentIndex;
     });
     const playing = computed(() => {
       return store.state.playing;
@@ -81,6 +84,52 @@ export default {
     function togglePlay() {
       store.commit("setPlayingState", !playing.value);
     }
+
+    function next() {
+
+      if (!playlist.value.length) {
+        return;
+      }
+      if (playlist.value.length === 1) {
+        loop();
+        return;
+      }
+      const currentIndexValue = currentIndex.value;
+      let index;
+      if (currentIndexValue === playlist.value.length - 1) {
+        index = 0;
+      } else {
+        index = currentIndexValue + 1;
+      }
+
+      store.commit("setCurrentIndex", index);
+      store.commit("setPlayingState", true);
+    }
+
+    function prev() {
+      if (!playlist.value.length) {
+        return;
+      }
+      if (playlist.value.length === 1) {
+        loop();
+        return;
+      }
+      const currentIndexValue = currentIndex.value;
+      let index;
+      if (currentIndexValue === 0) {
+        index = playlist.value.length - 1;
+      } else {
+        index = currentIndexValue - 1;
+      }
+
+      store.commit("setCurrentIndex", index);
+    }
+    function loop() {
+      const audio = audioRef.value;
+      audio.currentTime = 0;
+      audio.play();
+      store.commit("setPlayingState", true);
+    }
     return {
       back,
       onPause,
@@ -90,6 +139,8 @@ export default {
       currentSong,
       playlist,
       togglePlay,
+      next,
+      prev,
     };
   },
 };
