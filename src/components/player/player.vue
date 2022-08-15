@@ -13,7 +13,7 @@
       <div class="bottom">
         <div class="operator">
           <div class="icon icon-left">
-            <i></i>
+            <i :class="modeIcon" @click="changeMode"></i>
           </div>
           <div class="icon icon-left" :class="disableIcon">
             <i class="icon-prev" @click="prev"></i>
@@ -40,6 +40,7 @@
 <script>
 import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";
+import { useMode } from "@/components/player/use-mode";
 
 export default {
   name: "player",
@@ -68,6 +69,7 @@ export default {
     const disableIcon = computed(() => {
       return songReady.value ? null : "disable";
     });
+    const { modeIcon, changeMode } = useMode();
     watch(currentSong, (newSong) => {
       if (!newSong.mid || !newSong.url) {
         return;
@@ -161,8 +163,10 @@ export default {
       onPause,
       audioRef,
       playIcon,
+      changeMode,
       fullScreen,
       currentSong,
+      modeIcon,
       playlist,
       togglePlay,
       next,
