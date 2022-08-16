@@ -11,6 +11,17 @@
       </div>
       <div class="middle"></div>
       <div class="bottom">
+        <div class="progress-wrapper">
+          <span class="time time-l">
+            {{ formatTime(currentTime) }}
+          </span>
+          <div class="progress-bar-wrapper">
+            <progress-bar :progress="progress"></progress-bar>
+          </div>
+          <span class="time time-r">{{
+            formatTime(currentSong.duration)
+          }}</span>
+        </div>
         <div class="operator">
           <div class="icon icon-left">
             <i :class="modeIcon" @click="changeMode"></i>
@@ -38,6 +49,7 @@
       @error="onError"
       @canplay="onCanPlay"
       @pause="onPause"
+      @timeupdate="onTimeUpdate"
     ></audio>
   </div>
 </template>
@@ -47,13 +59,17 @@ import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";
 import { useMode } from "@/components/player/use-mode";
 import { useFavorite } from "@/components/player/use-favorite";
+import ProgressBar from "@/components/player/progress-bar";
+import { formatTime } from "@/assets/js/utils";
 
 export default {
   name: "player",
+  components: { ProgressBar },
   setup() {
     const store = useStore();
     const audioRef = ref();
     const songReady = ref();
+    const currentTime = ref(0);
     const currentSong = computed(() => {
       return store.getters.currentSong;
     });
@@ -79,11 +95,14 @@ export default {
     const disableIcon = computed(() => {
       return songReady.value ? null : "disable";
     });
-
+    const progress = computed(() => {
+      return currentTime.value / currentSong.value.duration;
+    });
     watch(currentSong, (newSong) => {
       if (!newSong.mid || !newSong.url) {
         return;
       }
+      currentTime.value = 0;
       songReady.value = false;
       const audio = audioRef.value;
       audio.src = newSong.url;
@@ -128,7 +147,6 @@ export default {
       } else {
         index = currentIndexValue + 1;
       }
-
       store.commit("setCurrentIndex", index);
       store.commit("setPlayingState", true);
     }
@@ -148,8 +166,8 @@ export default {
       } else {
         index = currentIndexValue - 1;
       }
-
       store.commit("setCurrentIndex", index);
+      store.commit("setPlayingState", true);
     }
     function loop() {
       const audio = audioRef.value;
@@ -166,6 +184,9 @@ export default {
     function onError() {
       songReady.value = true;
     }
+    function onTimeUpdate(e) {
+      currentTime.value = e.target.currentTime;
+    }
     return {
       onError,
       onCanPlay,
@@ -181,9 +202,13 @@ export default {
       togglePlay,
       next,
       prev,
+      formatTime,
       disableIcon,
       toggleFavorite,
       favoriteIcon,
+      currentTime,
+      progress,
+      onTimeUpdate,
     };
   },
 };
@@ -249,6 +274,29 @@ export default {
       position: absolute;
       bottom: 50px;
       width: 100%;
+      .progress-wrapper {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        padding: 10px 0;
+        .time {
+          font-size: var(--m-font-size-small);
+          color: var(--m-color-text);
+          width: 40px;
+          flex: 0 0 40px;
+          &.time-l {
+            text-align: left;
+          }
+          &.time-r {
+            text-align: right;
+          }
+        }
+
+        .progress-bar-wrapper {
+          flex: 1;
+        }
+      }
       .operator {
         display: flex;
         align-items: center;
