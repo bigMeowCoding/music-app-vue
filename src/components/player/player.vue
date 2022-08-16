@@ -148,7 +148,7 @@ export default {
       if (!songReady.value || !playlist.value.length) {
         return;
       }
-      if (playlist.value.length === 1) {
+      if (playlist.value.length === 1 || playMode.value === PLAY_MODE.loop) {
         loop();
         return;
       }
@@ -167,7 +167,7 @@ export default {
       if (!songReady.value || !playlist.value.length) {
         return;
       }
-      if (playlist.value.length === 1) {
+      if (playlist.value.length === 1 || playMode.value === PLAY_MODE.loop) {
         loop();
         return;
       }
