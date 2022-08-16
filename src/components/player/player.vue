@@ -16,7 +16,11 @@
             {{ formatTime(currentTime) }}
           </span>
           <div class="progress-bar-wrapper">
-            <progress-bar :progress="progress"></progress-bar>
+            <progress-bar
+              :progress="progress"
+              @progress-changing="onProgressChanging"
+              @progress-changed="onProgressChanged"
+            ></progress-bar>
           </div>
           <span class="time time-r">{{
             formatTime(currentSong.duration)
@@ -49,6 +53,7 @@
       @error="onError"
       @canplay="onCanPlay"
       @pause="onPause"
+      @ended="end"
       @timeupdate="onTimeUpdate"
     ></audio>
   </div>
@@ -61,15 +66,19 @@ import { useMode } from "@/components/player/use-mode";
 import { useFavorite } from "@/components/player/use-favorite";
 import ProgressBar from "@/components/player/progress-bar";
 import { formatTime } from "@/assets/js/utils";
+import { PLAY_MODE } from "@/assets/js/constant";
 
 export default {
   name: "player",
   components: { ProgressBar },
   setup() {
+    let progressChanging = false;
+
     const store = useStore();
     const audioRef = ref();
     const songReady = ref();
     const currentTime = ref(0);
+
     const currentSong = computed(() => {
       return store.getters.currentSong;
     });
@@ -84,6 +93,9 @@ export default {
     });
     const fullScreen = computed(() => {
       return store.state.fullScreen;
+    });
+    const playMode = computed(() => {
+      return store.state.playMode;
     });
 
     const { modeIcon, changeMode } = useMode();
@@ -185,13 +197,37 @@ export default {
       songReady.value = true;
     }
     function onTimeUpdate(e) {
+      if (progressChanging) {
+        return;
+      }
       currentTime.value = e.target.currentTime;
+    }
+    function end() {
+      currentTime.value = 0;
+      if (playMode.value === PLAY_MODE.loop) {
+        loop();
+      } else {
+        next();
+      }
+    }
+    function onProgressChanging(progress) {
+      progressChanging = true;
+      currentTime.value = currentSong.value.duration * progress;
+    }
+
+    function onProgressChanged(progress) {
+      progressChanging = false;
+      currentTime.value = currentSong.value.duration * progress;
+      audioRef.value.currentTime = currentTime.value;
+      store.commit("setPlayingState", true);
     }
     return {
       onError,
       onCanPlay,
       back,
       onPause,
+      onProgressChanging,
+      onProgressChanged,
       audioRef,
       playIcon,
       changeMode,
@@ -209,6 +245,7 @@ export default {
       currentTime,
       progress,
       onTimeUpdate,
+      end,
     };
   },
 };
