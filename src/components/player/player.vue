@@ -24,7 +24,12 @@
           <div class="icon icon-right" :class="disableIcon">
             <i class="icon-next" @click="next"></i>
           </div>
-          <div class="icon icon-right"></div>
+          <div class="icon icon-right">
+            <i
+              :class="favoriteIcon(currentSong)"
+              @click="toggleFavorite(currentSong)"
+            ></i>
+          </div>
         </div>
       </div>
     </div>
@@ -41,6 +46,7 @@
 import { useStore } from "vuex";
 import { computed, ref, watch } from "vue";
 import { useMode } from "@/components/player/use-mode";
+import { useFavorite } from "@/components/player/use-favorite";
 
 export default {
   name: "player",
@@ -63,13 +69,17 @@ export default {
     const fullScreen = computed(() => {
       return store.state.fullScreen;
     });
+
+    const { modeIcon, changeMode } = useMode();
+    const { favoriteIcon, toggleFavorite } = useFavorite();
+
     const playIcon = computed(() => {
       return playing.value ? "icon-pause" : "icon-play";
     });
     const disableIcon = computed(() => {
       return songReady.value ? null : "disable";
     });
-    const { modeIcon, changeMode } = useMode();
+
     watch(currentSong, (newSong) => {
       if (!newSong.mid || !newSong.url) {
         return;
@@ -172,6 +182,8 @@ export default {
       next,
       prev,
       disableIcon,
+      toggleFavorite,
+      favoriteIcon,
     };
   },
 };
