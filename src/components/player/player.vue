@@ -9,7 +9,21 @@
         <div class="title">{{ currentSong.name }}</div>
         <div class="sub-title">{{ currentSong.singer }}</div>
       </div>
-      <div class="middle"></div>
+      <div class="middle">
+        <div class="middle-l">
+          <div class="cd-wrapper">
+            <div class="cd" ref="cdRef">
+              <img
+                :src="currentSong.pic"
+                ref="cdImgRef"
+                :class="cdCls"
+                class="image"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="bottom">
         <div class="progress-wrapper">
           <span class="time time-l">
@@ -67,6 +81,7 @@ import { useFavorite } from "@/components/player/use-favorite";
 import ProgressBar from "@/components/player/progress-bar";
 import { formatTime } from "@/assets/js/utils";
 import { PLAY_MODE } from "@/assets/js/constant";
+import { useCd } from "@/components/player/use-cd";
 
 export default {
   name: "player",
@@ -100,7 +115,7 @@ export default {
 
     const { modeIcon, changeMode } = useMode();
     const { favoriteIcon, toggleFavorite } = useFavorite();
-
+    const { cdCls, cdRef, cdImgRef } = useCd();
     const playIcon = computed(() => {
       return playing.value ? "icon-pause" : "icon-play";
     });
@@ -246,6 +261,10 @@ export default {
       progress,
       onTimeUpdate,
       end,
+      // cd
+      cdCls,
+      cdRef,
+      cdImgRef,
     };
   },
 };
@@ -305,6 +324,46 @@ export default {
         line-height: 24px;
         text-align: center;
         font-size: var(--m-font-size-medium);
+      }
+    }
+    .middle {
+      position: fixed;
+      top: 80px;
+      bottom: 170px;
+      white-space: nowrap;
+      width: 100%;
+      .middle-l {
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 80%;
+        width: 100%;
+        height: 0;
+        position: relative;
+        .cd-wrapper {
+          top: 0;
+          width: 80%;
+          height: 100%;
+          left: 10%;
+          position: absolute;
+          .cd {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            .image {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              box-sizing: border-box;
+              border-radius: 50%;
+              border: 10px solid rgba(255, 255, 255, 0.1);
+            }
+            .playing {
+              animation: rotate 20s linear infinite;
+            }
+          }
+        }
       }
     }
     .bottom {
