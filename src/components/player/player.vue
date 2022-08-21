@@ -168,8 +168,10 @@ export default {
       const audio = audioRef.value;
       if (p) {
         audio.play();
+        playLyric()
       } else {
         audio.pause();
+        stopLyric()
       }
     });
     function back() {
@@ -254,6 +256,8 @@ export default {
     function onProgressChanging(progress) {
       progressChanging = true;
       currentTime.value = currentSong.value.duration * progress;
+      playLyric()
+      stopLyric()
     }
 
     function onProgressChanged(progress) {
@@ -261,6 +265,7 @@ export default {
       currentTime.value = currentSong.value.duration * progress;
       audioRef.value.currentTime = currentTime.value;
       store.commit("setPlayingState", true);
+      playLyric()
     }
     return {
       onError,
