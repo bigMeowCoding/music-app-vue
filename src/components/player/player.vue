@@ -23,6 +23,20 @@
             </div>
           </div>
         </div>
+        <Scroll class="middle-r" ref="lyricScrollRef">
+          <div class="lyric-wrapper">
+            <div v-if="currentLyric" ref="lyricListRef">
+              <p
+                class="text"
+                v-for="(line, index) in currentLyric.lines"
+                :key="index"
+                :class="{ 'current': currentLine === index }"
+              >
+                {{ line.txt }}
+              </p>
+            </div>
+          </div>
+        </Scroll>
       </div>
       <div class="bottom">
         <div class="progress-wrapper">
@@ -82,10 +96,11 @@ import ProgressBar from "@/components/player/progress-bar";
 import { formatTime } from "@/assets/js/utils";
 import { PLAY_MODE } from "@/assets/js/constant";
 import { useCd } from "@/components/player/use-cd";
-
+import { useLyric } from "@/components/player/use-lyric";
+import Scroll from "@/components/base/scroll/scroll";
 export default {
   name: "player",
-  components: { ProgressBar },
+  components: { Scroll, ProgressBar },
   setup() {
     let progressChanging = false;
 
@@ -116,6 +131,17 @@ export default {
     const { modeIcon, changeMode } = useMode();
     const { favoriteIcon, toggleFavorite } = useFavorite();
     const { cdCls, cdRef, cdImgRef } = useCd();
+    const {
+      currentLyric,
+      lyricListRef,
+      currentLine,
+      playLyric,
+      stopLyric,
+      lyricScrollRef,
+    } = useLyric({
+      songReady,
+      currentTime,
+    });
     const playIcon = computed(() => {
       return playing.value ? "icon-pause" : "icon-play";
     });
@@ -265,6 +291,13 @@ export default {
       cdCls,
       cdRef,
       cdImgRef,
+      // lyric
+      currentLyric,
+      lyricListRef,
+      lyricScrollRef,
+      currentLine,
+      stopLyric,
+      playLyric,
     };
   },
 };
@@ -333,7 +366,8 @@ export default {
       white-space: nowrap;
       width: 100%;
       .middle-l {
-        display: inline-block;
+        display: none;
+        //display: inline-block;
         vertical-align: top;
         padding-top: 80%;
         width: 100%;
@@ -361,6 +395,27 @@ export default {
             }
             .playing {
               animation: rotate 20s linear infinite;
+            }
+          }
+        }
+      }
+      .middle-r {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+        overflow: hidden;
+        .lyric-wrapper {
+          width: 80%;
+          margin: 0 auto;
+          text-align: center;
+          overflow: hidden;
+          .text {
+            line-height: 32px;
+            color: var(--m-color-text-l);
+            font-size: var(--m-font-size-medium);
+            &.current {
+              color: var(--m-color-text);
             }
           }
         }

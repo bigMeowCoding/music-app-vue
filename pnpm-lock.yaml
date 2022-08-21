@@ -15,6 +15,7 @@ specifiers:
   good-storage: ^1.1.1
   html-webpack-plugin: ^5.5.0
   js-base64: ^3.7.2
+  lyric-parser: ^1.0.1
   pinyin: 3.0.0-alpha.5
   postcss: ^8.4.14
   postcss-loader: ^7.0.1
@@ -46,6 +47,7 @@ dependencies:
   cookie-parser: registry.npmmirror.com/cookie-parser/1.4.6
   express: registry.npmmirror.com/express/4.18.1
   good-storage: registry.npmmirror.com/good-storage/1.1.1
+  lyric-parser: registry.npmmirror.com/lyric-parser/1.0.1
   vant: registry.npmmirror.com/vant/3.5.4_vue@3.2.37
   vue: registry.npmmirror.com/vue/3.2.37
   vue-router: registry.npmmirror.com/vue-router/4.1.3_vue@3.2.37
@@ -2831,6 +2833,12 @@ packages:
     dependencies:
       yallist: registry.npmmirror.com/yallist/4.0.0
     dev: true
+
+  registry.npmmirror.com/lyric-parser/1.0.1:
+    resolution: {integrity: sha512-klGkA3gsKMyHENefKj1OnbscWRAxvxNsYNuxgmSIQg6KqVx/HnTrfcD/gNP74XBcu7HSh+kGhCjetPlH91OtFA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lyric-parser/-/lyric-parser-1.0.1.tgz}
+    name: lyric-parser
+    version: 1.0.1
+    dev: false
 
   registry.npmmirror.com/magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/magic-string/-/magic-string-0.25.9.tgz}
