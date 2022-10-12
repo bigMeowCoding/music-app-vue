@@ -14,6 +14,7 @@
           </li>
         </ul>
       </li>
+      <Poster v-if="hasPoster"/>
     </ul>
     <div class="fixed" v-show="fixedTitle" :style="fixedStyle">
       <div class="fixed-title">
@@ -43,9 +44,10 @@
 import Scroll from "@/components/base/scroll/scroll";
 import { useFixed } from "@/components/index-list/useFixed";
 import { useShortCut } from "@/components/index-list/useShortCut";
+import Poster from "@/App";
 export default {
   name: "index-list",
-  components: { Scroll },
+  components: {Poster, Scroll },
   props: {
     data: {
       type: Array,
@@ -53,6 +55,7 @@ export default {
         return [];
       },
     },
+    hasPoster: false,
   },
   emits: ["select"],
   setup(props, { emit }) {

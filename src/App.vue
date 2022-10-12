@@ -10,7 +10,8 @@ import { defineComponent } from "vue";
 import Header from "@/components/header/header.vue";
 import Tab from "@/components/tab/tab.vue";
 import Player from "@/components/player/player.vue";
+import Poster from "@/components/poster/poster.vue";
 export default defineComponent({
-  components: { Player, Tab, Header },
+  components: { Poster, Player, Tab, Header },
 });
 </script>

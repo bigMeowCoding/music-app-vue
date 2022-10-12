@@ -1,6 +1,6 @@
 <template>
   <div class="singer" v-loading="!singers.length">
-    <index-list :data="singers" @select="selectSinger"></index-list>
+    <index-list :data="singers" @select="selectSinger" has-poster="true"></index-list>
     <router-view v-slot="{ Component }">
       <transition name="slide" appear>
         <component :is="Component" :singer="selectedSinger"></component>
@@ -14,9 +14,10 @@ import { getSingerList } from "@/service/singers";
 import IndexList from "@/components/index-list/index-list";
 import storage from "good-storage";
 import { SINGER } from "@/assets/js/constant";
+import Poster from "@/App";
 export default {
   name: "singer",
-  components: { IndexList },
+  components: {Poster, IndexList },
   data() {
     return { singers: [], selectedSinger: null };
   },
