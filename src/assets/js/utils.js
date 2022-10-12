@@ -14,3 +14,10 @@ export function swap(arr, i, j) {
   arr[i] = arr[j];
   arr[j] = temp;
 }
+
+export function formatTime(times) {
+  times = times | 0;
+  const min = (((times / 60) | 0) + "").padStart(2, "0");
+  const sec = ((times % 60) + "").padStart(2, "0");
+  return `${min}:${sec}`;
+}

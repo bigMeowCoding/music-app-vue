@@ -17,5 +17,15 @@ const mutations = {
   setFullScreen(state, fullScreen) {
     state.fullScreen = fullScreen;
   },
+  setFavoriteList(state, list) {
+    state.favoriteList = list;
+  },
+  addSongLyric(state, { song, lyric }) {
+    const desSong = state.sequenceList.find((item) => item.mid === song.mid);
+    if (desSong) {
+      desSong.lyric = lyric;
+    }
+    return desSong;
+  },
 };
 export default mutations;

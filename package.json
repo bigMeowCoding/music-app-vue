@@ -43,6 +43,7 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.18.1",
     "good-storage": "^1.1.1",
+    "lyric-parser": "^1.0.1",
     "vant": "^3.5.3",
     "vue": "^3.2.37",
     "vue-router": "^4.1.3",
