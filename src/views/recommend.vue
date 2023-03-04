@@ -55,10 +55,11 @@ export default {
     };
   },
   async created() {
-    const res = await getRecommend();
+    const res = await getRecommend().catch((e)=>{
+      console.error(e)
+    });
     this.sliders = res.sliders;
     this.albums = res.albums;
-    console.log(res);
   },
 };
 </script>

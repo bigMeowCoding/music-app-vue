@@ -19,7 +19,10 @@ export function createLoadingLikeDirective(component) {
   }
   return {
     mounted(el, binding) {
-      const div = document.createElement("div");
+      if(typeof window ==='undefined') {
+        return
+      }
+      const div = document?.createElement("div");
       if (!el[name]) {
         el[name] = {};
       }
