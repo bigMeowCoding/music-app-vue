@@ -1,13 +1,14 @@
 <template>
-toplist
+  toplist
+  <Poster />
 </template>
 
 <script>
+import Poster from "@/App";
 export default {
-  name: "top-list"
-}
+  name: "top-list",
+  components: { Poster },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

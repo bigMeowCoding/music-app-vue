@@ -27,6 +27,7 @@
             </li>
           </ul>
         </div>
+        <Poster />
       </div>
     </scroll>
   </div>
