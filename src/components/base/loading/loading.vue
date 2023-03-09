@@ -1,7 +1,7 @@
 <template>
   <div class="loading">
     <div class="loading-content">
-      <van-loading type="spinner" />
+      <Loading type="spinner" />
       <p class="loading-desc">
         {{ title }}
       </p>
@@ -15,7 +15,7 @@ import { Loading } from "vant";
 export default {
   name: "loading",
   components: {
-    [Loading.name]: Loading,
+    Loading,
   },
   data() {
     return { title: "正在加载" };

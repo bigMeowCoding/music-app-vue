@@ -85,7 +85,6 @@ async function runServer() {
 }
 
 runServer().then((d) => {
-  console.log("ssss");
 
   app.listen(SERVER_PORT, () => {
     console.log("listen===", SERVER_PORT);

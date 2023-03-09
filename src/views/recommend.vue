@@ -1,6 +1,6 @@
 <template>
   <div class="recommend" v-loading="loading">
-    <scroll class="recommend-content" >
+    <scroll class="recommend-content">
       <div>
         <div class="slider-wrapper">
           <div class="slider-content">
@@ -27,7 +27,6 @@
             </li>
           </ul>
         </div>
-        <Poster />
       </div>
     </scroll>
   </div>
@@ -37,11 +36,11 @@
 import Slider from "@/components/base/slider/slider";
 import { getRecommend } from "@/service/recommend";
 import Scroll from "@/components/base/scroll/scroll";
-import { Button } from "vant";
+import { Image as VanImage } from "vant";
 
 export default {
   name: "recommend",
-  components: { Scroll, Slider },
+  components: { Scroll, Slider, VanImage },
   computed: {
     loading() {
       return !this.sliders.length && !this.albums.length;
@@ -51,13 +50,12 @@ export default {
     return {
       sliders: [],
       albums: [],
-      loadingText:'加载哈。。。。。',
-      [Button.name]: Button,
+      loadingText: "加载哈。。。。。",
     };
   },
   async created() {
-    const res = await getRecommend().catch((e)=>{
-      console.error(e)
+    const res = await getRecommend().catch((e) => {
+      console.error(e);
     });
     this.sliders = res.sliders;
     this.albums = res.albums;
